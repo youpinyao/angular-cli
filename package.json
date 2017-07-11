@@ -1,6 +1,6 @@
 {
   "name": "meetyou-angular-cli",
-  "version": "0.0.8",
+  "version": "0.0.23",
   "description": "command of meetyou angular",
   "main": "index.js",
   "scripts": {

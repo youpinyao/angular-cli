@@ -7,6 +7,8 @@ const request = require('request');
 const ProgressBar = require('progress');
 const decompress = require('decompress');
 
+const tryCount = 1;
+
 const githubPath = 'https://codeload.github.com/youpinyao/meetyou-angular-ui-demo/zip/';
 
 function create(projectName, version) {
@@ -49,7 +51,13 @@ function downloadProbject(projectPath, version) {
   request(`${githubPath}${version || 'master'}`).on('response', res => {
       const len = parseInt(res.headers['content-length'], 10);
 
-      console.log();
+      if (isNaN(len)) {
+        // setTimeout(() => {
+        //   downloadProbject(projectPath, version);
+        // }, 1000);
+        return;
+      }
+
       const bar = new ProgressBar(chalk.yellow('下载中 [:bar] :rate/bps :percent :etas'), {
         complete: '=',
         incomplete: ' ',
@@ -68,14 +76,17 @@ function downloadProbject(projectPath, version) {
     })
     .pipe(fs.createWriteStream(zipPath))
     .on('close', function () {
-      decompress(zipPath, projectPath, {
-        strip: 1
-      }).then(files => {
-        console.log();
-        console.log(chalk.green('项目初始化成功'));
-        console.log();
-        del.sync([zipPath]);
-      });
-    });;
+      if (fs.existsSync(zipPath)) {
+        decompress(zipPath, projectPath, {
+          strip: 1
+        }).then(files => {
+          console.log();
+          console.log(chalk.green('项目初始化成功'));
+          console.log();
+          del.sync([zipPath]);
+        });
+      }
+    });
+
 }
 module.exports = create;

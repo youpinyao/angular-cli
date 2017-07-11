@@ -18,7 +18,7 @@ switch (command) {
     break;
   case '-v':
   case '--version':
-    version();
+    version.print();
     break;
   case 'upgrade':
     upgrade();

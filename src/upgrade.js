@@ -4,24 +4,46 @@ const cliSpinners = require('cli-spinners');
 const ora = require('ora');
 
 const version = require('./version.js');
+const info = require('./info.js');
+const currentVersion = version.version;
 
 const loading = ora({
   spinner: cliSpinners.dost
 });
 
-
 function upgrade() {
+  info().then(d => {
+    const latestVersion = d['dist-tags'].latest;
 
-  loading.start(chalk.green('更新中'));
+    console.log(chalk.yellow(`当前版本 ${currentVersion}`));
+    console.log(chalk.yellow(`最新版本 ${latestVersion}`));
 
-  execSeries(['npm update -g meetyou-angular-cli'], (err, stdouts, stderrs) => {
+    if (latestVersion !== currentVersion) {
+      doUpdate();
+    } else {
+      console.log(chalk.red('无需更新'));
+    }
+  });
+}
+
+function doUpdate() {
+  const cmd = 'npm install -g meetyou-angular-cli@latest';
+
+  console.log();
+  console.log(`run: ${chalk.green(cmd)}`);
+  console.log();
+  setTimeout(() => {
+    loading.start(chalk.green('更新中'));
+  });
+
+  execSeries([cmd], (err, stdouts, stderrs) => {
     if (err) {
       throw err;
     }
 
     loading.stop();
 
-    version();
+    version.print();
 
     if (!stdouts[0] && !stderrs[0]) {
       console.log(chalk.red('无更新'));
@@ -32,4 +54,6 @@ function upgrade() {
 
   })
 }
+
+
 module.exports = upgrade;
