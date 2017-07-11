@@ -50,7 +50,7 @@ function downloadProbject(projectPath, version) {
       const len = parseInt(res.headers['content-length'], 10);
 
       console.log();
-      const bar = new ProgressBar(chalk.yellow('downloading [:bar] :rate/bps :percent :etas'), {
+      const bar = new ProgressBar(chalk.yellow('下载中 [:bar] :rate/bps :percent :etas'), {
         complete: '=',
         incomplete: ' ',
         width: 20,
