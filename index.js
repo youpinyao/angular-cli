@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const chalk = require('chalk');
 const help = require('./help.js');
 const create = require('./create.js');
