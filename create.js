@@ -36,7 +36,7 @@ function create(projectName, version) {
 function createDir(projectPath, version) {
   fs.mkdirSync(projectPath);
   console.log();
-  console.log(chalk.green(`创建成功 ${projectPath}`));
+  console.log(chalk.green(`目录创建成功 ${projectPath}`));
 
   downloadProbject(projectPath, version);
 }
@@ -62,8 +62,8 @@ function downloadProbject(projectPath, version) {
       });
 
       res.on('end', function () {
-        console.log();
-        console.log(chalk.green(`下载成功 ${zipPath}`));
+        // console.log();
+        // console.log(chalk.green(`下载成功 ${zipPath}`));
       });
     })
     .pipe(fs.createWriteStream(zipPath))

@@ -1,11 +1,12 @@
 {
   "name": "meetyou-angular-cli",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "command of meetyou angular",
   "main": "index.js",
   "scripts": {
-    "help": "node ./index.js",
-    "create": "node ./index.js create meeyouAngularDemo"
+    "help": "node ./index.js -h",
+    "version": "node ./index.js -v",
+    "create": "node ./index.js create meetyouAngularDemo"
   },
   "bin": {
     "meetyou-angular": "./index.js"
