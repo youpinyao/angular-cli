@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
 const chalk = require('chalk');
-const help = require('./help.js');
-const version = require('./version.js');
-const create = require('./create.js');
+const help = require('./src/help.js');
+const version = require('./src/version.js');
+const upgrade = require('./src/upgrade.js');
+const create = require('./src/create.js');
 
 const command = process.argv[2];
 const args = process.argv.slice(3, process.argv.length);
 
-console.log(chalk.green(`command ${command}`));
-console.log(chalk.green(`args    ${args}`));
+// console.log(chalk.green(`command ${command}`));
+// console.log(chalk.green(`args    ${args}`));
 
 switch (command) {
   case 'create':
@@ -17,11 +18,14 @@ switch (command) {
     break;
   case '-v':
   case '--version':
-    version.log();
-  break;
+    version();
+    break;
+  case 'upgrade':
+    upgrade();
+    break;
   case '-h':
   case '--help':
   default:
-    help.log();
+    help();
     break;
 }
