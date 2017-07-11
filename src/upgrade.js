@@ -3,6 +3,8 @@ const chalk = require('chalk');
 const cliSpinners = require('cli-spinners');
 const ora = require('ora');
 
+const version = require('./version.js');
+
 const loading = ora({
   spinner: cliSpinners.dost
 });
@@ -18,6 +20,8 @@ function upgrade() {
     }
 
     loading.stop();
+
+    version();
 
     if (!stdouts[0] && !stderrs[0]) {
       console.log(chalk.red('无更新'));
