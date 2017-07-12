@@ -1,6 +1,6 @@
 {
   "name": "meetyou-angular-cli",
-  "version": "0.0.23",
+  "version": "0.0.25",
   "description": "command of meetyou angular",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "url": "git+https://github.com/youpinyao/meetyou-angular-cli.git"
   },
   "keywords": [
-    "meeyou",
+    "meetyou",
     "angular",
     "cli",
     "command"
