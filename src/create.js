@@ -7,8 +7,6 @@ const request = require('request');
 const ProgressBar = require('progress');
 const decompress = require('decompress');
 
-const tryCount = 1;
-
 const githubPath = 'https://codeload.github.com/youpinyao/meetyou-angular-ui-demo/zip/';
 
 function create(projectName, version) {
@@ -46,19 +44,19 @@ function createDir(projectPath, version) {
 function downloadProbject(projectPath, version) {
 
   const zipPath = path.join(projectPath, 'project.zip');
+  const downloadPath = `${githubPath}${version || 'master'}`;
 
   // The options argument is optional so you can omit it
-  request(`${githubPath}${version || 'master'}`).on('response', res => {
+  request(downloadPath).on('response', res => {
       const len = parseInt(res.headers['content-length'], 10);
 
       if (isNaN(len)) {
-        // setTimeout(() => {
-        //   downloadProbject(projectPath, version);
-        // }, 1000);
         return;
       }
 
-      const bar = new ProgressBar(chalk.yellow('下载中 [:bar] :rate/bps :percent :etas'), {
+      console.log(chalk.green(`下载中 ${downloadPath}`));
+
+      const bar = new ProgressBar(chalk.yellow(`下载中 [:bar] :rate/bps :percent :etas`), {
         complete: '=',
         incomplete: ' ',
         width: 20,
