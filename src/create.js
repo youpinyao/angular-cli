@@ -54,8 +54,8 @@ function downloadProbject(projectPath, version) {
         len = 702709;
       }
 
-      console.log(chalk.green(`下载中 ${downloadPath}`), len);
-      console.log(chalk.green(`status code : ${res.statusCode}`));
+      console.log(chalk.green(`下载中 ${downloadPath}`));
+      // console.log(chalk.green(`status code : ${res.statusCode}`));
       console.log();
 
       const bar = new ProgressBar(chalk.yellow(`下载中 [:bar] :rate/bps :percent :etas`), {
