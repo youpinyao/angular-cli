@@ -47,14 +47,16 @@ function downloadProbject(projectPath, version) {
   const downloadPath = `${githubPath}${version || 'master'}`;
 
   // The options argument is optional so you can omit it
-  request(downloadPath).on('response', res => {
-      const len = parseInt(res.headers['content-length'], 10);
+  const aaa = request(downloadPath).on('response', res => {
+      let len = parseInt(res.headers['content-length'], 10);
 
       if (isNaN(len)) {
-        return;
+        len = 702709;
       }
 
-      console.log(chalk.green(`下载中 ${downloadPath}`));
+      console.log(chalk.green(`下载中 ${downloadPath}`), len);
+      console.log(chalk.green(`status code : ${res.statusCode}`));
+      console.log();
 
       const bar = new ProgressBar(chalk.yellow(`下载中 [:bar] :rate/bps :percent :etas`), {
         complete: '=',
@@ -73,6 +75,9 @@ function downloadProbject(projectPath, version) {
       });
     })
     .pipe(fs.createWriteStream(zipPath))
+    .on('error', function (err) {
+      console.log(chalk.red(err));
+    })
     .on('close', function () {
       if (fs.existsSync(zipPath)) {
         decompress(zipPath, projectPath, {
