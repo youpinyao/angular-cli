@@ -18,13 +18,15 @@ function create(projectName, version) {
 
   const projectPath = path.join(process.cwd(), './', projectName);
   const ifExist = fs.existsSync(projectName);
-  const isDelete = new Confirm('目录已存在, 是否删除目录？');
+  const isDelete = new Confirm('目录已存在, 是否删除目录（不删除目录，将会在该目录下解压项目）？');
 
   if (ifExist) {
     isDelete.run().then(answer => {
       if (answer) {
         del.sync([projectPath]);
         createDir(projectPath, version);
+      } else {
+        createDir(projectPath, version, false)
       }
     });
     return;
@@ -33,8 +35,10 @@ function create(projectName, version) {
   createDir(projectPath, version);
 }
 
-function createDir(projectPath, version) {
-  fs.mkdirSync(projectPath);
+function createDir(projectPath, version, mkdir) {
+  if (mkdir !== false) {
+    fs.mkdirSync(projectPath);
+  }
   console.log();
   console.log(chalk.green(`目录创建成功 ${projectPath}`));
 
