@@ -6,6 +6,12 @@ const Confirm = require('prompt-confirm');
 const request = require('request');
 const ProgressBar = require('progress');
 const decompress = require('decompress');
+const exec = require('child_process').exec;
+const cliSpinners = require('cli-spinners');
+const ora = require('ora');
+const loading = ora({
+  spinner: cliSpinners.dost
+});
 
 const githubPath = 'https://codeload.github.com/youpinyao/meetyou-angular-ui-demo/zip/';
 
@@ -91,6 +97,21 @@ function downloadProbject(projectPath, version) {
           console.log(chalk.green('项目初始化成功'));
           console.log();
           del.sync([zipPath]);
+
+          loading.start(chalk.green('npm i'));
+
+          exec('npm i', {
+            cwd: projectPath
+          }, function (err, out) {
+            if (err) {
+              console.log(chalk.red(err));
+              return;
+            }
+            console.log(chalk.green(out));
+
+            loading.stop();
+            console.log(chalk.green('npm i success'));
+          });
         });
       }
     });
