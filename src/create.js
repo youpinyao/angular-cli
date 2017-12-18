@@ -98,20 +98,21 @@ function downloadProbject(projectPath, version) {
           console.log();
           del.sync([zipPath]);
 
-          // loading.start(chalk.green('npm i'));
+          console.log(chalk.green('开始加载依赖库'));
+          loading.start(chalk.green('npm i'));
 
-          // exec('npm i', {
-          //   cwd: projectPath
-          // }, function (err, out) {
-          //   if (err) {
-          //     console.log(chalk.red(err));
-          //     return;
-          //   }
-          //   console.log(chalk.green(out));
+          exec('npm i', {
+            cwd: projectPath
+          }, function (err, out) {
+            if (err) {
+              console.log(chalk.red(err));
+              return;
+            }
+            console.log(chalk.green(out));
 
-          //   loading.stop();
-          //   console.log(chalk.green('npm i success'));
-          // });
+            loading.stop();
+            console.log(chalk.green('npm i success'));
+          });
         });
       }
     });
